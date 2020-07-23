@@ -2,6 +2,7 @@ package org.fasttrackit.persistence;
 
 import org.fasttrackit.config.DatabaseConfiguration;
 import org.fasttrackit.transfer.CreateTaskRequest;
+import org.fasttrackit.transfer.UpdateTaskRequest;
 
 import java.io.InputStream;
 import java.sql.Date;
@@ -30,6 +31,17 @@ public class TaskRepository {
 
         try (PreparedStatement preparedStatement = DatabaseConfiguration.getConnection().prepareStatement(sql)) {
             preparedStatement.setLong(1, id);
+
+            preparedStatement.executeUpdate();
+        }
+    }
+
+    public void updateTask(long id, UpdateTaskRequest request) throws SQLException {
+        String sql = "UPDATE task SET done = ? WHERE id = ?";
+
+        try (PreparedStatement preparedStatement = DatabaseConfiguration.getConnection().prepareStatement(sql)) {
+            preparedStatement.setBoolean(1, request.isDone());
+            preparedStatement.setLong(2, id);
 
             preparedStatement.executeUpdate();
         }
