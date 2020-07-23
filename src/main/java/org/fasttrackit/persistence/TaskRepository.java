@@ -24,4 +24,14 @@ public class TaskRepository {
             preparedStatement.executeUpdate();
         }
     }
+
+    public void deleteTask(long id) throws SQLException {
+        String sql = "DELETE FROM task WHERE id = ?";
+
+        try (PreparedStatement preparedStatement = DatabaseConfiguration.getConnection().prepareStatement(sql)) {
+            preparedStatement.setLong(1, id);
+
+            preparedStatement.executeUpdate();
+        }
+    }
 }
