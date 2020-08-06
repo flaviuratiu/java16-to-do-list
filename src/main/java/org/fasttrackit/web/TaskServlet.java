@@ -59,4 +59,15 @@ public class TaskServlet extends HttpServlet {
             resp.sendError(500, e.getMessage());
         }
     }
+
+    @Override
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String idAsString = req.getParameter("id");
+
+        try {
+            taskService.deleteTask(Long.parseLong(idAsString));
+        } catch (SQLException e) {
+            resp.sendError(500, e.getMessage());
+        }
+    }
 }
